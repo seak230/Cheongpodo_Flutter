@@ -10,7 +10,7 @@ class Homescreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        AppbarTextfiled(),
+        AppbarTextfiled(floating: true,),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             childCount: 20,
