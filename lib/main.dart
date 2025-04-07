@@ -1,4 +1,3 @@
-import 'package:cheongpodo_flutter/view/home/home_screen.dart';
 import 'package:cheongpodo_flutter/widgets/my_stateful_widget.dart';
 import 'package:flutter/material.dart';
 
