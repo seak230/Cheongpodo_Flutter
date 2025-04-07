@@ -1,17 +1,14 @@
 import 'package:cheongpodo_flutter/view/term/term_search_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class AppbarTextfiled extends StatelessWidget {
-  final bool floating;
-  const AppbarTextfiled({required this.floating, super.key});
+  const AppbarTextfiled({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      floating: floating,
+      floating: true,
       title: InkWell(
         highlightColor: Colors.black12,
         borderRadius: BorderRadius.circular(8.0),
@@ -50,7 +47,7 @@ class AppbarTextfiled extends StatelessWidget {
           ),
         ),
       ),
-    );;
+    );
   }
 }
 
