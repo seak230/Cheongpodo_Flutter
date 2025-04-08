@@ -6,12 +6,14 @@ import '../screens/term/term_search_screen.dart';
 
 class AppbarTextfiled extends StatelessWidget {
   final bool textField;
+  final TextEditingController? controller; // 외부 주입 가능하게
 
-  const AppbarTextfiled({required this.textField, super.key});
+  const AppbarTextfiled({required this.textField, super.key, this.controller});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
+    final TextEditingController effectiveController =
+        controller ?? TextEditingController();
 
     return SliverAppBar(
       automaticallyImplyLeading: !textField,
@@ -57,7 +59,7 @@ class AppbarTextfiled extends StatelessWidget {
               ] else ...[
                 Flexible(
                   child: TextField(
-                    controller: controller,
+                    controller: effectiveController,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 8),
                       border: OutlineInputBorder(
@@ -77,9 +79,9 @@ class AppbarTextfiled extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: InkWell(
                   onTap: textField ? () {
-                    final term = controller.text.trim();
+                    final term = effectiveController.text.trim();
                     if (term.isNotEmpty) {
-                      Get.to(() => TermScreen(term: term));
+                      Get.to(() => TermScreen(term: term), preventDuplicates: false, transition: Transition.fadeIn);
                     }
                   } : null,
                   borderRadius: BorderRadius.circular(20), // 터치 영역 모양 설정 가능
