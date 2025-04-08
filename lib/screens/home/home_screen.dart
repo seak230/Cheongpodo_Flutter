@@ -1,9 +1,9 @@
 import 'package:cheongpodo_flutter/component/appbar_textfiled.dart';
 import 'package:flutter/material.dart';
 
-class Homescreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
 
-  const Homescreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

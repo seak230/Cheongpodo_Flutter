@@ -1,6 +1,7 @@
-import 'package:cheongpodo_flutter/view/term/term_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../screens/term/term_search_screen.dart';
 
 class AppbarTextfiled extends StatelessWidget {
   const AppbarTextfiled({super.key});

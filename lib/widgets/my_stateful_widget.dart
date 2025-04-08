@@ -1,10 +1,11 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
 import 'package:cheongpodo_flutter/icon/bottom_bar_icon_icons.dart';
-import 'package:cheongpodo_flutter/view/News/news_screen.dart';
-import 'package:cheongpodo_flutter/view/Route/route_screen.dart';
-import 'package:cheongpodo_flutter/view/home/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/home/home_screen.dart';
+import '../screens/news/news_screen.dart';
+import '../screens/route/route_screen.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({super.key});
@@ -18,7 +19,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final List<Widget> _widgetOptions = [
     RouteScreen(),
     NewsScreen(),
-    Homescreen(),
+    HomeScreen(),
   ];
 
   void _onItemTapped(int index) {

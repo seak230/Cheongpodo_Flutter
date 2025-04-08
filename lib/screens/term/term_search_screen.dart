@@ -1,4 +1,4 @@
-import 'package:cheongpodo_flutter/view/term/term_screen.dart';
+import 'package:cheongpodo_flutter/screens/term/term_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,7 @@ class TermSearchScreen extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
 
     return Scaffold(
-      resizeToAvoidBottomInset: true, // (1) 키보드에 따라 화면 조정
+      resizeToAvoidBottomInset: true,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return CustomScrollView(
