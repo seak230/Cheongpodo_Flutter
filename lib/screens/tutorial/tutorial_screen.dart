@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class RouteScreen extends StatelessWidget {
-  const RouteScreen({super.key});
+class TutorialScreen extends StatelessWidget {
+  const TutorialScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

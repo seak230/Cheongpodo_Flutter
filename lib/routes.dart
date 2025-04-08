@@ -1,11 +1,11 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
 import 'package:cheongpodo_flutter/icon/bottom_bar_icon_icons.dart';
+import 'package:cheongpodo_flutter/screens/tutorial/tutorial_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/home/home_screen.dart';
-import '../screens/news/news_screen.dart';
-import '../screens/route/route_screen.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/news/news_screen.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({super.key});
@@ -17,7 +17,7 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 2;
   final List<Widget> _widgetOptions = [
-    RouteScreen(),
+    TutorialScreen(),
     NewsScreen(),
     HomeScreen(),
   ];
@@ -42,7 +42,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               color: _selectedIndex == 0 ? PRIMARY_COLOR : LIGHT_GRAY_COLOR,
               size: icon_size,
             ),
-            label: 'route',
+            label: 'tutorial',
           ),
           BottomNavigationBarItem(
             icon: Icon(
