@@ -1,5 +1,6 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
 import 'package:cheongpodo_flutter/widgets/appbar_textfiled.dart';
+import 'package:cheongpodo_flutter/widgets/news_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,27 +95,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 35),
-            SizedBox(
-              height: 200, // 필수! 높이 안 주면 PageView 안 보임
-              child: PageView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100 * (index + 1)],
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '페이지 ${index + 1}',
-                        style: const TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            NewsCard(),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
