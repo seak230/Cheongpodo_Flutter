@@ -7,13 +7,15 @@ class LoginViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
   LoginResponse? loginResponse;
 
-  Future<void> login(String id, String password) async {
+  Future<bool> login(String id, String password) async {
     final response = await _authService.login(LoginRequest(id: id, password: password));
     if (response != null) {
       loginResponse = response;
       print('로그인 성공: ${response.data.accessToken}');
+      return true;
     } else {
       print('로그인 실패');
+      return false;
     }
     notifyListeners();
   }
