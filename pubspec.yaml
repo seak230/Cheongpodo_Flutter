@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.1.4
   flutter_svg: ^2.0.17
   get: ^4.7.2
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

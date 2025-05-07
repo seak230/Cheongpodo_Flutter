@@ -1,32 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../routes.dart';
+import '../../viewmodels/login_viewmodel.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final idController = TextEditingController();
+  final pwController = TextEditingController();
+
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController id_text = TextEditingController();
-    TextEditingController pw_text = TextEditingController();
+    final viewModel = Provider.of<LoginViewModel>(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(title: Text('로그인')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           children: [
             TextField(
-              controller: id_text,
+              controller: idController,
               decoration: InputDecoration(labelText: '아이디'),
             ),
             TextField(
-              controller: pw_text,
-              decoration: InputDecoration(labelText: '비번'),
+              controller: pwController,
+              obscureText: true,
+              decoration: InputDecoration(labelText: '비밀번호'),
             ),
-            TextButton(
-                onPressed: () {
-                  print(id_text.text);
-                  print(pw_text.text);
-                },
-                child: Text('로그인')
+            ElevatedButton(
+              onPressed: () async {
+                viewModel.login(
+                  idController.text,
+                  pwController.text,
+                );
+
+                final success = await viewModel.login(
+                  idController.text,
+                  pwController.text,
+                );
+
+                if (success) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('로그인 성공')),
+                  );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => MyStatefulWidget()),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('로그인 실패')),
+                  );
+                }
+              },
+              child: Text('로그인'),
             ),
           ],
         ),
