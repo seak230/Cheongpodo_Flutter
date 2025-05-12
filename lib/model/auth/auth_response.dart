@@ -1,16 +1,16 @@
-class LoginResponse {
+class AuthResponse {
   final int status;
   final String message;
   final TokenData data;
 
-  LoginResponse({
+  AuthResponse({
     required this.status,
     required this.message,
     required this.data,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
       status: json['status'],
       message: json['message'],
       data: TokenData.fromJson(json['data']),

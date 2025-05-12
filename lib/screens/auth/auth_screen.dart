@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
-import '../../viewmodels/login_viewmodel.dart';
+import '../../viewmodels/auth_viewmodel.dart';
 
 class LoginScreen extends StatelessWidget {
   final idController = TextEditingController();
@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<LoginViewModel>(context);
+    final viewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text('로그인')),
@@ -46,6 +46,7 @@ class LoginScreen extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('로그인 성공')),
                   );
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (_) => MyStatefulWidget()),

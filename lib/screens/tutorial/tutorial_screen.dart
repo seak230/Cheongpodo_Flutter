@@ -42,8 +42,8 @@ class TutorialScreen extends StatelessWidget {
               ],
             ),
           ),
-          ButtonList(category: ageCategory),
-          ButtonList(category: category),
+          // ButtonList(category: ageCategory),
+          // ButtonList(category: category),
 
           RouteCard(),
           RouteCard()

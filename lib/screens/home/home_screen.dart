@@ -1,9 +1,12 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
+import 'package:cheongpodo_flutter/services/auth_service.dart';
 import 'package:cheongpodo_flutter/widgets/appbar_textfiled.dart';
 import 'package:cheongpodo_flutter/widgets/news_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+import '../../viewmodels/news_viewmodel.dart';
 import '../term/term_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> dummyWidgets = List.generate(
       10,
-      (index) => ListTile(
+          (index) => ListTile(
         title: Material(
           color: Colors.transparent, // 배경색 유지하고 싶다면 투명하게
           child: InkWell(
@@ -33,9 +36,10 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        // trailing: Icon(Icons.arrow_forward_ios),
       ),
     );
+
+    // final newsViewModel = Provider.of<NewsViewModel>(context);
 
     return CustomScrollView(
       slivers: [
@@ -95,13 +99,13 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 35),
-            NewsCard(),
+            // NewsCard(),
+            // test(newsViewModel),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
                 width: double.infinity,
-                // height: 180,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: const BorderRadius.only(
@@ -116,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.square_rounded, color: PRIMARY_COLOR,),
+                          Icon(Icons.square_rounded, color: PRIMARY_COLOR),
                           SizedBox(width: 5),
                           Text(
                             '오늘의 경제 단어',
