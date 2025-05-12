@@ -31,6 +31,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../model/news/news_response.dart';
 
 class NewsCard extends StatelessWidget {
@@ -48,7 +49,7 @@ class NewsCard extends StatelessWidget {
         title: Text(news.title),
         subtitle: Text('${news.company} • ${news.uploadTime}'),
         onTap: () {
-          // 웹뷰로 연결 등 가능
+          launchUrl(Uri.parse(news.url));
         },
       ),
     );

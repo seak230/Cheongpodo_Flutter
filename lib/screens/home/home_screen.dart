@@ -1,12 +1,8 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
-import 'package:cheongpodo_flutter/services/auth_service.dart';
 import 'package:cheongpodo_flutter/widgets/appbar_textfiled.dart';
-import 'package:cheongpodo_flutter/widgets/news_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
-import '../../viewmodels/news_viewmodel.dart';
 import '../term/term_screen.dart';
 
 class HomeScreen extends StatelessWidget {
