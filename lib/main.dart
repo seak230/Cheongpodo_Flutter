@@ -2,6 +2,7 @@ import 'package:cheongpodo_flutter/screens/auth/auth_screen.dart';
 import 'package:cheongpodo_flutter/screens/home/home_screen.dart';
 import 'package:cheongpodo_flutter/viewmodels/auth_viewmodel.dart';
 import 'package:cheongpodo_flutter/viewmodels/news_viewmodel.dart';
+import 'package:cheongpodo_flutter/viewmodels/term_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => NewsViewModel()),
+        ChangeNotifierProvider(create: (_) => TermViewModel()),
       ],
       child: MyApp()
     ),

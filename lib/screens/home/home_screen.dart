@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           color: Colors.transparent, // 배경색 유지하고 싶다면 투명하게
           child: InkWell(
             onTap: () {
-              Get.to(() => TermScreen(term: '제목 ${index + 1}'), preventDuplicates: false, transition: Transition.fadeIn);
+              // Get.to(() => TermScreen(term: '제목 ${index + 1}'), preventDuplicates: false, transition: Transition.fadeIn);
             },
             borderRadius: BorderRadius.circular(12), // 클릭 효과 모양도 둥글게
             child: Container(

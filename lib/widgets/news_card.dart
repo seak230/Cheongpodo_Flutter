@@ -45,11 +45,11 @@ class NewsCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       elevation: 2,
       child: ListTile(
-        leading: Image.network(news.thumbnail, width: 80, fit: BoxFit.cover),
-        title: Text(news.title),
+        leading: Image.network(news.thumbnail!, width: 80, fit: BoxFit.cover),
+        title: Text(news.title!),
         subtitle: Text('${news.company} • ${news.uploadTime}'),
         onTap: () {
-          launchUrl(Uri.parse(news.url));
+          launchUrl(Uri.parse(news.url!));
         },
       ),
     );

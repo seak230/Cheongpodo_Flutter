@@ -81,7 +81,7 @@ class AppbarTextfiled extends StatelessWidget {
                   onTap: textField ? () {
                     final term = effectiveController.text.trim();
                     if (term.isNotEmpty) {
-                      Get.to(() => TermScreen(term: term), preventDuplicates: false, transition: Transition.fadeIn);
+                      // Get.to(() => TermScreen(term: term), preventDuplicates: false, transition: Transition.fadeIn);
                     }
                   } : null,
                   borderRadius: BorderRadius.circular(20), // 터치 영역 모양 설정 가능

@@ -21,18 +21,18 @@ class NewsResponse {
 }
 
 class News {
-  final String title;
-  final String url;
-  final String company;
-  final String thumbnail;
-  final String uploadTime;
+  final String? title;
+  final String? url;
+  final String? company;
+  final String? thumbnail;
+  final String? uploadTime;
 
   News({
-    required this.title,
-    required this.url,
-    required this.company,
-    required this.thumbnail,
-    required this.uploadTime,
+    this.title,
+    this.url,
+    this.company,
+    this.thumbnail,
+    this.uploadTime,
   });
 
   factory News.fromJson(Map<String, dynamic> json) {
