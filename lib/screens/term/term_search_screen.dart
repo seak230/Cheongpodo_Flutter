@@ -41,7 +41,6 @@ class _TermSearchScreenState extends State<TermSearchScreen> {
                 },
                 decoration: InputDecoration(
                   hintText: '용어를 검색하세요',
-                  prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 ),
               ),

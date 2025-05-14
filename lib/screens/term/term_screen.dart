@@ -23,9 +23,7 @@ class TermScreen extends StatelessWidget {
         builder: (context, constraints) {
           return CustomScrollView(
             slivers: [
-              AppbarTextfiled(
-                textField: true,
-              ),
+              AppbarTextfiled(textField: false,),
               SliverList(
                 delegate: SliverChildListDelegate([
                   Padding(

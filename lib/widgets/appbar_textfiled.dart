@@ -24,17 +24,9 @@ class AppbarTextfiled extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         onTap: () {
           if (!textField) {
-            Get.to(
-              () => const TermSearchScreen(),
-              transition: Transition.fadeIn,
-            );
-          }
-        },
-        onLongPress: () {
-          if (!textField) {
-            Get.to(
-              () => const TermSearchScreen(),
-              transition: Transition.fadeIn,
+            Get.offUntil(
+              MaterialPageRoute(builder: (_) => const TermSearchScreen()),
+                  (route) => route.isFirst,
             );
           }
         },
