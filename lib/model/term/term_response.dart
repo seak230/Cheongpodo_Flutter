@@ -42,4 +42,4 @@ class Term {
       termDifficulty: json['termDifficulty'],
     );
   }
-}
+} 

@@ -49,5 +49,4 @@ class TermViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 }
