@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../model/tutorial/GpsResponse.dart';
 import '../../viewmodels/tutorial_viewmodel.dart';
+import 'grape_screen.dart';
 
 class GrapesScreen extends StatelessWidget {
   final int gpsId;
@@ -101,6 +102,7 @@ class _OneGpsCardState extends State<OneGpsCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // 제목
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -112,8 +114,12 @@ class _OneGpsCardState extends State<OneGpsCard> {
                   ],
                 ),
                 const SizedBox(height: 10),
+
+                // 간단 정보
                 Text('${widget.gp.gpTm}분 - 포도알 - ${widget.gp.gpseCnt}/${widget.gp.gpseCntMax}'),
                 const SizedBox(height: 10),
+
+                // 확장된 상태일 때 포도알 목록
                 if (isExpanded)
                   isLoading
                       ? const CircularProgressIndicator()
@@ -121,7 +127,25 @@ class _OneGpsCardState extends State<OneGpsCard> {
                       ? const Text('해당 자료가 없습니다.')
                       : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: grapeList.map((g) => Text('· ${g.gpseNm}')).toList(),
+                    children: grapeList.map((g) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => GrapeScreen(grape: g),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Text(
+                            '· ${g.gpseNm}',
+                            style: const TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
               ],
             ),
@@ -131,3 +155,4 @@ class _OneGpsCardState extends State<OneGpsCard> {
     );
   }
 }
+
