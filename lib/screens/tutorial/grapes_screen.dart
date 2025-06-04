@@ -61,46 +61,73 @@ class GrapesScreen extends StatelessWidget {
   }
 }
 
-class OneGpsCard extends StatelessWidget {
+class OneGpsCard extends StatefulWidget {
   final Gp gp;
 
   const OneGpsCard({super.key, required this.gp});
 
   @override
-  Widget build(BuildContext context) {
-    // print(gp.gpId);
-    // return Container();
-    return FutureBuilder(
-      future: Provider.of<TutorialViewmodel>(context, listen: false).fetchGrape(gp.gpId),
-      builder: (context, snapshot) {
-        final grapeList = Provider.of<TutorialViewmodel>(context).grapeResponse?.data;
+  State<OneGpsCard> createState() => _OneGpsCardState();
+}
 
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(gp.gpNm, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 10),
-                  Text('${gp.gpTm}분 - 포도알 - ${gp.gpseCnt}/${gp.gpseCntMax}'),
-                  const SizedBox(height: 10),
-                  if (snapshot.connectionState != ConnectionState.done)
-                    const CircularProgressIndicator()
-                  else if (grapeList == null || grapeList.isEmpty)
-                    const Text('해당 자료가 없습니다.')
-                  else
-                    ...grapeList.map((g) => Text(g.gpseNm)).toList(),
-                ],
-              ),
+class _OneGpsCardState extends State<OneGpsCard> {
+  bool isExpanded = false;
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<TutorialViewmodel>(context);
+    final grapeList = vm.getGrapes(widget.gp.gpId);
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: GestureDetector(
+        onTap: () async {
+          setState(() {
+            isExpanded = !isExpanded;
+          });
+
+          if (isExpanded && grapeList == null && !isLoading) {
+            setState(() => isLoading = true);
+            await vm.fetchGrape(widget.gp.gpId);
+            setState(() => isLoading = false);
+          }
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 4,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.gp.gpNm, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                    Icon(
+                      isExpanded ? Icons.expand_less : Icons.expand_more,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text('${widget.gp.gpTm}분 - 포도알 - ${widget.gp.gpseCnt}/${widget.gp.gpseCntMax}'),
+                const SizedBox(height: 10),
+                if (isExpanded)
+                  isLoading
+                      ? const CircularProgressIndicator()
+                      : (grapeList == null || grapeList.isEmpty)
+                      ? const Text('해당 자료가 없습니다.')
+                      : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: grapeList.map((g) => Text('· ${g.gpseNm}')).toList(),
+                  ),
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -10,7 +10,11 @@ class TutorialViewmodel extends ChangeNotifier {
 
   TutorialResponse? tutorialResponse;
   GpsResponse? gpsResponse;
-  GrapeResponse? grapeResponse;
+
+  // ✅ 각 gpId별로 grapeList를 저장하는 맵
+  final Map<int, List<Grape>> _grapeMap = {};
+
+  List<Grape>? getGrapes(int gpId) => _grapeMap[gpId];
 
   Future<void> fetchGps() async {
     tutorialResponse = await _service.getGps();
@@ -23,7 +27,12 @@ class TutorialViewmodel extends ChangeNotifier {
   }
 
   Future<void> fetchGrape(int gpId) async {
-    grapeResponse = await _service.getGrape(gpId: gpId);
-    notifyListeners();
+    if (_grapeMap.containsKey(gpId)) return; // 이미 불러왔으면 다시 안함
+
+    final response = await _service.getGrape(gpId: gpId);
+    if (response?.data != null) {
+      _grapeMap[gpId] = response!.data!;
+      notifyListeners();
+    }
   }
 }
