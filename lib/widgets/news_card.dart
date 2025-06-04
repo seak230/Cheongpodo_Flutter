@@ -47,7 +47,7 @@ class NewsCard extends StatelessWidget {
       child: ListTile(
         leading: Image.network(news.thumbnail!, width: 80, fit: BoxFit.cover),
         title: Text(news.title!),
-        subtitle: Text('${news.company} • ${news.uploadTime}'),
+        subtitle: Text('${news.company} • ${news.uploadTime ?? ''}'),
         onTap: () {
           launchUrl(Uri.parse(news.url!));
         },

@@ -1,4 +1,5 @@
 import 'package:cheongpodo_flutter/screens/home/home_screen.dart';
+import 'package:cheongpodo_flutter/screens/tutorial/grapes_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class GpsCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
           onTap: () {
-            
+            Get.to(GrapesScreen(gpsId: gps.gpsId,));
           },
           child: Padding(
             padding: const EdgeInsets.all(20.0),
