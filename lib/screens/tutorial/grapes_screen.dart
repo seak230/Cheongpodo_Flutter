@@ -133,7 +133,7 @@ class _OneGpsCardState extends State<OneGpsCard> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => GrapeScreen(grape: g),
+                              builder: (_) => GrapeScreen(grape: g, gpseId: g.gpseId,),
                             ),
                           );
                         },

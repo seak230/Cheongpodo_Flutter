@@ -1,3 +1,4 @@
+import 'package:cheongpodo_flutter/model/tutorial/gpse_response.dart';
 import 'package:cheongpodo_flutter/model/tutorial/grape_response.dart';
 import 'package:cheongpodo_flutter/model/tutorial/tutorial_response.dart';
 import 'package:cheongpodo_flutter/services/tutorial_service.dart';
@@ -10,6 +11,7 @@ class TutorialViewmodel extends ChangeNotifier {
 
   TutorialResponse? tutorialResponse;
   GpsResponse? gpsResponse;
+  GpseResponse? gpseResponse;
 
   // ✅ 각 gpId별로 grapeList를 저장하는 맵
   final Map<int, List<Grape>> _grapeMap = {};
@@ -34,5 +36,10 @@ class TutorialViewmodel extends ChangeNotifier {
       _grapeMap[gpId] = response!.data!;
       notifyListeners();
     }
+  }
+
+  Future<void> fetchOneGpse(int gpseId) async {
+    gpseResponse = await _service.getOneGpse(gpseId: gpseId);
+    notifyListeners();
   }
 }
