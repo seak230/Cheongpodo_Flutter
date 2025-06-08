@@ -11,6 +11,8 @@ class TermViewModel extends ChangeNotifier {
   TermResponse? get termResponse => _termResponse;
   EachTermResponse? get eachTermResponse => _eachTermResponse;
 
+  String summary = '';
+
   Future<void> getTerms({final int page = 0, final int size = 20}) async {
     try {
       _termResponse = await _termService.getTerm(page: page, size: size);
@@ -46,6 +48,14 @@ class TermViewModel extends ChangeNotifier {
     } catch (e) {
       print('한 개의 단어 데이터 로딩 실패: $e');
       _eachTermResponse = EachTermResponse(status: 0, message: '', data: Term(termId: 0, termNm: '', termExplain: '', termDifficulty: ''));
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchSummary(String termNm) async {
+    final result = await _termService.explainTerm(termNm: termNm);
+    if (result != null) {
+      summary = result;
       notifyListeners();
     }
   }

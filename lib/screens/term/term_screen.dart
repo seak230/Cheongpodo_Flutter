@@ -41,11 +41,6 @@ class TermScreen extends StatelessWidget {
                                 fit: FlexFit.tight,
                                 child: Container(color: Colors.black),
                               ),
-                              Icon(
-                                Icons.bookmark,
-                                size: 30,
-                                color: PRIMARY_COLOR,
-                              ),
                             ],
                           ),
                           Container(height: 10.0,),
@@ -67,25 +62,68 @@ class TermScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: Colors.black,
-                                    width: 1
-                                  )
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '쉬운용어 풀이',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 10.0,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                                    width: 1,
                                   ),
                                 ),
+                                child:
+                                InkWell(
+                                  onTap: () async {
+                                    await termViewModel.fetchSummary("국경간 자본유출입");
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: SingleChildScrollView(
+                                            child: Text(termViewModel.summary),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text("쉬운용어 풀이"),
+                                )
+
+                                // InkWell(
+                                //   onTap: () async {
+                                //     showDialog(
+                                //       context: context,
+                                //       barrierDismissible: false,
+                                //       builder: (_) => const Center(child: CircularProgressIndicator()),
+                                //     );
+                                //
+                                //     await termViewModel.fetchTermSummary('예: 인플레이션');
+                                //
+                                //     Navigator.pop(context); // 로딩 끝나면 다이얼로그 닫기
+                                //
+                                //     showDialog(
+                                //       context: context,
+                                //       builder: (context) {
+                                //         return AlertDialog(
+                                //           title: const Text('용어 설명'),
+                                //           content: Text(termViewModel.summary),
+                                //           actions: [
+                                //             TextButton(
+                                //               onPressed: () => Navigator.pop(context),
+                                //               child: const Text('닫기'),
+                                //             ),
+                                //           ],
+                                //         );
+                                //       },
+                                //     );
+                                //   },
+                                //   child: const Padding(
+                                //     padding: EdgeInsets.all(8.0),
+                                //     child: Text(
+                                //       '쉬운용어 풀이',
+                                //       style: TextStyle(
+                                //         fontWeight: FontWeight.w700,
+                                //         fontSize: 10.0,
+                                //         color: Colors.black,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                               ),
                               // ElevatedButton(
                               //   onPressed: () {},

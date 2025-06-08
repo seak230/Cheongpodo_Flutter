@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cheongpodo_flutter/model/term/each_term_response.dart';
 import 'package:cheongpodo_flutter/model/term/term_response.dart';
 import 'package:cheongpodo_flutter/services/auth_service.dart';
@@ -100,4 +102,35 @@ class TermService {
       return EachTermResponse(status: 0, message: '', data: Term(termId: 0, termNm: '', termExplain: '', termDifficulty: ''));
     }
   }
+
+  Future<String?> explainTerm({required String termNm}) async {
+    final accessToken = await getAccessToken();
+    if (accessToken == null) {
+      print('토큰 없음');
+      return null;
+    }
+
+    try {
+      final response = await _dio.get(
+        '/termary/summarize/$termNm',
+        options: Options(
+          headers: {
+            'Authorization': accessToken,
+          },
+          responseType: ResponseType.plain, // <-- 여기가 핵심!
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data.toString(); // 그냥 문자열 반환
+      } else {
+        print('서버 응답 오류: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('요약 요청 실패: $e');
+      return null;
+    }
+  }
+
 }
