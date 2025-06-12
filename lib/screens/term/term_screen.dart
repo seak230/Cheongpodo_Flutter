@@ -1,6 +1,7 @@
 import 'package:cheongpodo_flutter/const/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodels/term_viewmodel.dart';
@@ -68,17 +69,24 @@ class TermScreen extends StatelessWidget {
                                 child:
                                 InkWell(
                                   onTap: () async {
-                                    await termViewModel.fetchSummary("국경간 자본유출입");
+                                    await termViewModel.fetchSummary(term);
                                     showDialog(
                                       context: context,
-                                      builder: (context) => Dialog(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(16.0),
-                                          child: SingleChildScrollView(
-                                            child: Text(termViewModel.summary),
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: SingleChildScrollView(
+                                              child: MarkdownBody(
+                                                data: termViewModel.summary.isNotEmpty
+                                                    ? termViewModel.summary
+                                                    : '불러올 내용이 없습니다.',
+                                                styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
+                                        );
+                                      },
                                     );
                                   },
                                   child: Text("쉬운용어 풀이"),
