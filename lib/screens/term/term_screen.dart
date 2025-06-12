@@ -61,35 +61,34 @@ class TermScreen extends StatelessWidget {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 1,
-                                  ),
+                                  color: Colors.orange
                                 ),
-                                child:
-                                InkWell(
-                                  onTap: () async {
-                                    await termViewModel.fetchSummary(term);
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: SingleChildScrollView(
-                                              child: MarkdownBody(
-                                                data: termViewModel.summary.isNotEmpty
-                                                    ? termViewModel.summary
-                                                    : '불러올 내용이 없습니다.',
-                                                styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 3.0, bottom: 3.0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await termViewModel.fetchSummary(term);
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16.0),
+                                              child: SingleChildScrollView(
+                                                child: MarkdownBody(
+                                                  data: termViewModel.summary.isNotEmpty
+                                                      ? termViewModel.summary
+                                                      : '불러올 내용이 없습니다.',
+                                                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Text("쉬운용어 풀이"),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Text("쉬운용어 풀이", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),),
+                                  ),
                                 )
 
                                 // InkWell(
@@ -133,13 +132,6 @@ class TermScreen extends StatelessWidget {
                                 //   ),
                                 // ),
                               ),
-                              // ElevatedButton(
-                              //   onPressed: () {},
-                              //   style: ElevatedButton.styleFrom(
-                              //     backgroundColor: Colors.orange,
-                              //   ),
-                              //   child:
-                              // ),
                             ],
                           ),
                           Container(height: 10.0,),
