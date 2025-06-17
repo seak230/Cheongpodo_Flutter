@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:cheongpodo_flutter/model/term/each_term_response.dart';
 import 'package:cheongpodo_flutter/model/term/term_response.dart';
 import 'package:cheongpodo_flutter/services/term_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TermViewModel extends ChangeNotifier {
   final TermService _termService = TermService();
@@ -10,6 +15,7 @@ class TermViewModel extends ChangeNotifier {
 
   TermResponse? get termResponse => _termResponse;
   EachTermResponse? get eachTermResponse => _eachTermResponse;
+  List<Term> todayTerms = [];
 
   String summary = '';
 
@@ -57,6 +63,48 @@ class TermViewModel extends ChangeNotifier {
     if (result != null) {
       summary = result;
       notifyListeners();
+    }
+  }
+
+  Future<void> loadDailyTerms() async {
+    final prefs = await SharedPreferences.getInstance();
+    final todayKey = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    // 저장된 날짜 확인
+    final savedDate = prefs.getString('daily_terms_date');
+    if (savedDate == todayKey && prefs.containsKey('daily_terms')) {
+      // 오늘 날짜에 이미 저장된 단어가 있다면 불러오기
+      final savedTermsJson = prefs.getStringList('daily_terms') ?? [];
+      todayTerms = savedTermsJson.map((e) => Term.fromJson(Map<String, dynamic>.from(jsonDecode(e)))).toList();
+      notifyListeners();
+      return;
+    }
+
+    try {
+      // 전체 단어 목록 불러오기
+      final result = await _termService.getTerm(page: 0, size: 1000);
+      if (result != null) {
+        final allTerms = result.data;
+        allTerms.shuffle(Random());
+
+        todayTerms = allTerms.take(10).toList();
+
+        // 저장
+        await prefs.setString('daily_terms_date', todayKey);
+        await prefs.setStringList(
+          'daily_terms',
+          todayTerms.map((e) => jsonEncode({
+            'termId': e.termId,
+            'termNm': e.termNm,
+            'termExplain': e.termExplain,
+            'termDifficulty': e.termDifficulty,
+          })).toList(),
+        );
+
+        notifyListeners();
+      }
+    } catch (e) {
+      print('오늘의 단어 로딩 실패: $e');
     }
   }
 }

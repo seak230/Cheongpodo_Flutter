@@ -27,7 +27,7 @@ class GpsCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
           onTap: () {
-            Get.to(GrapesScreen(gpsId: gps.gpsId,));
+            Get.to(GrapesScreen(gpsId: gps.gpsId, gpsName: gps.gpsName));
           },
           child: Padding(
             padding: const EdgeInsets.all(20.0),

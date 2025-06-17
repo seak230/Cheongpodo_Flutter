@@ -8,14 +8,15 @@ import 'grape_screen.dart';
 
 class GrapesScreen extends StatelessWidget {
   final int gpsId;
+  final String gpsName;
 
-  const GrapesScreen({super.key, required this.gpsId});
+  const GrapesScreen({super.key, required this.gpsId, required this.gpsName});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('제목'),
+        title: Text(gpsName),
         leading: BackButton(),
       ),
       body: FutureBuilder(
@@ -53,7 +54,7 @@ class GrapesScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(gps.gpsName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text('${gps.gpsTime}분 - 포도송이 - ${gps.gpCnt}/${gps.gpCntMax}포도알'),
+          Text('${gps.gpsTime}분 - 포도송이'),
           const SizedBox(height: 8),
           Text(gps.gpsContent),
         ],
@@ -116,7 +117,7 @@ class _OneGpsCardState extends State<OneGpsCard> {
                 const SizedBox(height: 10),
 
                 // 간단 정보
-                Text('${widget.gp.gpTm}분 - 포도알 - ${widget.gp.gpseCnt}/${widget.gp.gpseCntMax}'),
+                Text('${widget.gp.gpTm}분 - 포도알'),
                 const SizedBox(height: 10),
 
                 // 확장된 상태일 때 포도알 목록
