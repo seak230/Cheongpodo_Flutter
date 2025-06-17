@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../const/colors.dart';
 import '../model/tutorial/tutorial_response.dart';
@@ -26,8 +27,13 @@ class GpsCard extends StatelessWidget {
         elevation: 4.0, //그림자 깊이
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          onTap: () {
-            Get.to(GrapesScreen(gpsId: gps.gpsId, gpsName: gps.gpsName));
+          onTap: () async {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setInt('last_gps_id', gps.gpsId);
+            await prefs.setString('last_gps_name', gps.gpsName);
+            await prefs.setInt('last_gps_time', gps.gpsTime);
+
+            Get.to(() => GrapesScreen(gpsId: gps.gpsId, gpsName: gps.gpsName));
           },
           child: Padding(
             padding: const EdgeInsets.all(20.0),

@@ -4,8 +4,10 @@ import 'package:cheongpodo_flutter/widgets/appbar_textfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../term/term_screen.dart';
+import '../tutorial/grapes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,12 +19,28 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late TermViewModel termViewModel;
 
+  int? _lastGpsId;
+  String? _lastGpsName;
+  int? _lastGpsTime;
+
+
   @override
   void initState() {
     super.initState();
     termViewModel = Provider.of<TermViewModel>(context, listen: false);
     termViewModel.loadDailyTerms();
+    _loadLastTutorial(); // 추가
   }
+
+  void _loadLastTutorial() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _lastGpsId = prefs.getInt('last_gps_id');
+      _lastGpsName = prefs.getString('last_gps_name');
+      _lastGpsTime = prefs.getInt('last_gps_time');
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -33,62 +51,116 @@ class _HomeScreenState extends State<HomeScreen> {
         AppbarTextfiled(textField: false),
         SliverList(
           delegate: SliverChildListDelegate([
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                // 배경 Container
-                Container(
-                  width: double.infinity,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.7),
-                        spreadRadius: 0,
-                        blurRadius: 8.0,
-                        offset: Offset(0, 7),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // 가운데 정렬된 버튼
-                Positioned(
-                  bottom: -25, // Container 밖으로 20만큼 아래로
-                  left: 0,
-                  right: 0, // left, right 둘 다 주면 가운데 정렬됨
-                  child: Center(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: PRIMARY_COLOR,
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 60.0,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          '튜토리얼 보기',
+            if (_lastGpsId != null && _lastGpsName != null) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: const [
+                        Icon(Icons.history, color: PRIMARY_COLOR),
+                        SizedBox(width: 8),
+                        Text(
+                          '최근 본 튜토리얼',
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.0,
-                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    InkWell(
+                      onTap: () {
+                        // Get.to(() => GrapesScreen(
+                        //   gpsId: _lastGpsId!,
+                        //   gpsName: _lastGpsName!,
+                        // ));
+                      },
+                      borderRadius: BorderRadius.circular(16),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        elevation: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _lastGpsName ?? '',
+                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.timer, size: 16, color: Colors.grey),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '$_lastGpsTime분 소요',
+                                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ),
+
+                    SizedBox(height: 10.0,),
+
+                    // 가운데 정렬된 버튼
+                    Positioned(
+                      bottom: -25, // Container 밖으로 20만큼 아래로
+                      left: 0,
+                      right: 0, // left, right 둘 다 주면 가운데 정렬됨
+                      child: Center(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            final gpsId = prefs.getInt('last_gps_id');
+                            final gpsName = prefs.getString('last_gps_name');
+
+                            if (gpsId != null && gpsName != null) {
+                              Get.to(() => GrapesScreen(gpsId: gpsId, gpsName: gpsName));
+                            } else {
+                              Get.snackbar(
+                                '알림',
+                                '최근에 본 튜토리얼이 없습니다.',
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                            }
+                          },
+
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: PRIMARY_COLOR,
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 60.0,
+                              vertical: 10,
+                            ),
+                            child: Text(
+                              '튜토리얼 보기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 10.0,),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(height: 55),
+              ),
+            ],
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -115,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             '오늘의 경제 단어',
                             style: TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -143,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.transparent, // 배경색 유지하고 싶다면 투명하게
                                 child: InkWell(
                                   onTap: () {
-                                    // Get.to(() => TermScreen(term: '제목 ${index + 1}'), preventDuplicates: false, transition: Transition.fadeIn);
+                                    Get.to(() => TermScreen(term: term.termNm, termId: term.termId,), preventDuplicates: false, transition: Transition.fadeIn);
                                   },
                                   borderRadius: BorderRadius.circular(12), // 클릭 효과 모양도 둥글게
                                   child: Container(

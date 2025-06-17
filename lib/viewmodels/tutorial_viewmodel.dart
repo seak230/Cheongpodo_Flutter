@@ -3,6 +3,7 @@ import 'package:cheongpodo_flutter/model/tutorial/grape_response.dart';
 import 'package:cheongpodo_flutter/model/tutorial/tutorial_response.dart';
 import 'package:cheongpodo_flutter/services/tutorial_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/tutorial/GpsResponse.dart';
 
